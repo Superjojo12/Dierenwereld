@@ -1,0 +1,121 @@
+
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>DierenRijk 🐾</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fef6e4;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: #4d4d4d;
+    }
+    .pet-image {
+      max-width: 200px;
+      margin: 1rem;
+    }
+    .stats {
+      margin: 1rem 0;
+    }
+    .button-group button {
+      margin: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #ffb703;
+      color: #fff;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welkom bij mijn game! </h1>
+  <div id="start-screen">
+    <p> Ik hou van dieren, dus ja... <br> Kies een dier die je wilt verzorgen!<br>
+    <aKies een dier om te verzorgen:</p>
+    <button onclick="choosePet('hond')"> Hond</button>
+    <button onclick="choosePet('kat')"> Kat</button>
+    <button onclick="choosePet('konijn')"> Konijn</button>
+  </div>
+
+  <div id="game-screen" class="hidden">
+    <h2 id="pet-name"></h2>
+    <img id="pet-img" class="pet-image" src="" alt="Dier">
+    
+    <div class="stats">
+      <p>🐟 Honger: <span id="hunger">100</span>%</p>
+      <p>🎈 Geluk: <span id="happiness">100</span>%</p>
+      <p>❤️ Gezondheid: <span id="health">100</span>%</p>
+    </div>
+
+    <div class="button-group">
+      <button onclick="feedPet()">Voeren 🍖</button>
+      <button onclick="playWithPet()">Spelen 🎾</button>
+      <button onclick="washPet()">Wassen 🧼</button>
+    </div>
+  </div>
+
+  <script>
+    let pet = {
+      name: '',
+      img: '',
+      honger: 100,
+      geluk: 100,
+      gezondheid: 100
+    };
+
+    function choosePet(type) {
+      if (type === 'hond') {
+        pet.name = 'hond';
+        pet.img = 'https://cdn.pixabay.com/photo/2016/02/11/17/00/dog-1194087_1280.jpg'
+      } else if (type === 'kat') {
+        pet.name = 'kat';
+        pet.img = 'https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_960_720.jpg';
+      } else if (type === 'konijn') {
+        pet.name = 'konijn';
+        pet.img = 'https://cdn.pixabay.com/photo/2018/01/22/06/37/rabbit-3098259_1280.jpg';
+      }
+
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('game-screen').classList.remove('hidden');
+
+      document.getElementById('pet-name').innerText = "Je verzorgt een " + pet.name + "!";
+      document.getElementById('pet-img').src = pet.img;
+      updateStats();
+    }
+
+    function feedPet() {
+      pet.honger = Math.min(100, pet.honger + 15);
+      pet.geluk = Math.max(0, pet.geluk - 5);
+      updateStats();
+    }
+
+    function playWithPet() {
+      pet.geluk = Math.min(100, pet.geluk + 15);
+      pet.honger = Math.max(0, pet.honger - 10);
+      updateStats();
+    }
+
+    function washPet() {
+      pet.geluk = Math.max(0, pet.geluk - 5);
+      pet.gezondheid = Math.min(100, pet.gezondheid + 10);
+      updateStats();
+    }
+
+    function updateStats() {
+      document.getElementById('hunger').innerText = pet.honger;
+      document.getElementById('happiness').innerText = pet.geluk;
+      document.getElementById('health').innerText = pet.gezondheid;
+    }
+  </script>
+
+</body>
+</html>
